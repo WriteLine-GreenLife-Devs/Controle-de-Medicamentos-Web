@@ -36,15 +36,15 @@ else
                         <dl class="row g-2 mb-4">
                             <dt class="col-6 text-secondary fw-semibold">Paciente</dt>
                             <dd class="col-6 mb-0 text-break">
-                                <span class="d-inline-block rounded-circle border me-2 align-middle" style="width: 1rem; height: 1rem; background-color: @p.CategoriaCor;"></span>
-                                @p.CategoriaNome
+                                <span class="d-inline-block rounded-circle border me-2 align-middle" style="width: 1rem; height: 1rem;"></span>
+                                @p.Telefone
                             </dd>
 
-                            <dt class="col-6 text-secondary fw-semibold">Unidade</dt>
-                            <dd class="col-6 mb-0 text-break">@p.UnidadeMedida</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Cartão SUS</dt>
+                            <dd class="col-6 mb-0 text-break">@p.CartaoSUS</dd>
 
-                            <dt class="col-6 text-secondary fw-semibold">Preço Aproximado</dt>
-                            <dd class="col-6 mb-0 text-break">@p.PrecoAproximado.ToString("C")</dd>
+                            <dt class="col-6 text-secondary fw-semibold">CPF</dt>
+                            <dd class="col-6 mb-0 text-break">@p.Cpf</dd>
                         </dl>
 
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
