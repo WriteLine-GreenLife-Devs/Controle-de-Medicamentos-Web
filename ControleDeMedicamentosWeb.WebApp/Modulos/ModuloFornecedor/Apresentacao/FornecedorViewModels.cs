@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Apresentacao;
 
-public record ListarFornecedorsViewModel(
+public record ListarFornecedoresViewModel(
     Guid Id,
     string Nome,
     string Cor

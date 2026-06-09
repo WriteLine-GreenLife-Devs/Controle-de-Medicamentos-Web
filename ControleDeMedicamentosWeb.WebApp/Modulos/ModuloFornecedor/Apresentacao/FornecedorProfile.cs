@@ -7,10 +7,10 @@ public class FornecedorProfile : Profile
 {
     public FornecedorProfile()
     {
-        CreateMap<ListarFornecedorsDto, ListarFornecedorsViewModel>();
-        CreateMap<CadastrarFornecedorViewModel, CadastrarFornecedorDto>();
-        CreateMap<EditarFornecedorViewModel, EditarFornecedorDto>();
-        CreateMap<DetalhesFornecedorDto, EditarFornecedorViewModel>();
-        CreateMap<DetalhesFornecedorDto, ExcluirFornecedorViewModel>();
+        CreateMap<ListarFornecedoresDto, ListarFornecedoresViewModel>();
+        CreateMap<CadastrarFornecedorViewModel, CadastrarFornecedoresDto>();
+        CreateMap<EditarFornecedorViewModel, EditarFornecedoresDto>();
+        CreateMap<DetalhesFornecedoresDto, EditarFornecedorViewModel>();
+        CreateMap<DetalhesFornecedoresDto, ExcluirFornecedorViewModel>();
     }
 }

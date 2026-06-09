@@ -17,12 +17,12 @@ public class ServicoFornecedor
         //this.repositorioMedicamento = repositorioMedicamento;
     }
 
-    public Result Cadastrar(CadastrarFornecedorDto dto)
+    public Result Cadastrar(CadastrarFornecedoresDto dto)
     {
         if (ExisteFornecedorComNome(dto.Nome))
             return Falha(nameof(dto.Nome), "Já existe uma Fornecedor com este nome.");
 
-        Fornecedor novaFornecedor = new Fornecedor();
+        Fornecedor novaFornecedor = new Fornecedor(dto.Nome, dto.Telefone, dto.CNPJ);
 
         Result resultadoValidacao = ValidarEntidade(novaFornecedor);
 
@@ -34,12 +34,12 @@ public class ServicoFornecedor
         return Result.Ok();
     }
 
-    public Result Editar(EditarFornecedorDto dto)
+    public Result Editar(EditarFornecedoresDto dto)
     {
         if (ExisteFornecedorComNome(dto.Nome, dto.Id))
             return Falha(nameof(dto.Nome), "Já existe uma Fornecedor com este nome.");
 
-        Fornecedor FornecedorAtualizada = new Fornecedor();
+        Fornecedor FornecedorAtualizada = new Fornecedor(dto.Nome, dto.Telefone, dto.CNPJ);
 
         Result resultadoValidacao = ValidarEntidade(FornecedorAtualizada);
 
@@ -73,31 +73,31 @@ public class ServicoFornecedor
         return Result.Ok();
     }
 
-    public List<ListarFornecedorsDto> SelecionarTodos()
+    public List<ListarFornecedoresDto> SelecionarTodos()
     {
         return repositorioFornecedor
             .SelecionarTodos()
-            .Select(c => new ListarFornecedorsDto(c.Id, c.Nome, c.Cor))
+            .Select(f => new ListarFornecedoresDto(f.Id, f.Nome, f.Telefone, f.CNPJ))
             .ToList();
     }
 
-    public Result<DetalhesFornecedorDto> SelecionarPorId(Guid id)
+    public Result<DetalhesFornecedoresDto> SelecionarPorId(Guid id)
     {
         Fornecedor? Fornecedor = repositorioFornecedor.SelecionarPorId(id);
 
         if (Fornecedor == null)
             return Result.Fail("Fornecedor não encontrada.");
 
-        return Result.Ok(new DetalhesFornecedorDto(Fornecedor.Id, Fornecedor.Nome, Fornecedor.Cor));
+        return Result.Ok(new DetalhesFornecedoresDto(Fornecedor.Id, Fornecedor.Nome, Fornecedor.Telefone, Fornecedor.CNPJ));
     }
 
     private bool ExisteFornecedorComNome(string nome, Guid? idIgnorado = null)
     {
         return repositorioFornecedor
             .SelecionarTodos()
-            .Any(c =>
-                c.Id != idIgnorado &&
-                string.Equals(c.Nome, nome, StringComparison.OrdinalIgnoreCase)
+            .Any(f =>
+                f.Id != idIgnorado &&
+                string.Equals(f.Nome, nome, StringComparison.OrdinalIgnoreCase)
             );
     }
 

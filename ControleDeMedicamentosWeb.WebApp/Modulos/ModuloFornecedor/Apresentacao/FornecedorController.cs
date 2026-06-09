@@ -11,8 +11,8 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Listar()
     {
-        List<ListarFornecedorsDto> dtos = servicoFornecedor.SelecionarTodos();
-        List<ListarFornecedorsViewModel> listarVms = mapeador.Map<List<ListarFornecedorsViewModel>>(dtos);
+        List<ListarFornecedoresDto> dtos = servicoFornecedor.SelecionarTodos();
+        List<ListarFornecedoresViewModel> listarVms = mapeador.Map<List<ListarFornecedoresViewModel>>(dtos);
 
         return View(listarVms);
     }
@@ -31,7 +31,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
         if (!ModelState.IsValid)
             return View(cadastrarVm);
 
-        CadastrarFornecedorDto dto = mapeador.Map<CadastrarFornecedorDto>(cadastrarVm);
+        CadastrarFornecedoresDto dto = mapeador.Map<CadastrarFornecedoresDto>(cadastrarVm);
         Result resultado = servicoFornecedor.Cadastrar(dto);
 
         if (resultado.IsFailed)
@@ -47,7 +47,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Editar(Guid id)
     {
-        Result<DetalhesFornecedorDto> resultado = servicoFornecedor.SelecionarPorId(id);
+        Result<DetalhesFornecedoresDto> resultado = servicoFornecedor.SelecionarPorId(id);
 
         if (resultado.IsFailed)
         {
@@ -67,7 +67,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
         if (!ModelState.IsValid)
             return View(editarVm);
 
-        EditarFornecedorDto dto = mapeador.Map<EditarFornecedorDto>(editarVm);
+        EditarFornecedoresDto dto = mapeador.Map<EditarFornecedoresDto>(editarVm);
         Result resultado = servicoFornecedor.Editar(dto);
 
         if (resultado.IsFailed)
@@ -83,7 +83,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        Result<DetalhesFornecedorDto> resultado = servicoFornecedor.SelecionarPorId(id);
+        Result<DetalhesFornecedoresDto> resultado = servicoFornecedor.SelecionarPorId(id);
 
         if (resultado.IsFailed)
         {

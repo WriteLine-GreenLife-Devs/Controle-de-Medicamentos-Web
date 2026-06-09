@@ -1,4 +1,4 @@
-using ControleDeMedicamentosWeb.WebApp.Compartilhado;
+using ControleDeMedicamentosWeb.WebApp.Compartilhado.Dominio;
 
 public class Fornecedor : EntidadeBase<Fornecedor>
 {
@@ -6,46 +6,42 @@ public class Fornecedor : EntidadeBase<Fornecedor>
     public string Telefone = string.Empty;
     public string CNPJ = string.Empty;
 
-    #region Getters e Setters
-
-    public string GetNome()
-    {
-        return Nome;
-    }
-    public void SetNome(string nome)
+    public Fornecedor(string nome, string telefone, string cnpj)
     {
         Nome = nome;
-    }
-    public string GetTelefone()
-    {
-        return Telefone;
-    }
-    public void SetTelefone(string telefone)
-    {
         Telefone = telefone;
-    }
-    public string GetCNPJ()
-    {
-        return CNPJ;
-    }
-    public void SetCNPJ(string cnpj)
-    {
         CNPJ = cnpj;
     }
 
-    #endregion
-
-    #region Métodos
-    public override void AtualizarDados(EntidadeBase entidadeAtualizada)
+    public override List<string> Validar()
     {
-        var fornecedorAtualizado = (Fornecedor)entidadeAtualizada;
+        List<string> erros = new List<string>();
 
-        this.Nome = fornecedorAtualizado.GetNome();
-        this.Telefone = fornecedorAtualizado.GetTelefone();
-        this.CNPJ = fornecedorAtualizado.GetCNPJ();
+        if (string.IsNullOrWhiteSpace(Nome))
+            erros.Add("O campo \"Nome\" deve ser preenchido.");
+
+        else if (Nome.Length > 50)
+            erros.Add("O campo \"Nome\" deve conter no máximo 50 caracteres.");
+
+        if (string.IsNullOrWhiteSpace(Telefone))
+            erros.Add("O campo \"Telefone\" deve ser preenchido.");
+        
+        else if (Telefone.Length > 11)
+            erros.Add("O campo \"Telefone\" deve conter no máximo 50 caracteres.");
+
+        if (string.IsNullOrWhiteSpace(CNPJ))
+            erros.Add("O campo \"CNPJ\" deve ser preenchido.");
+        
+        else if (CNPJ.Length > 14)
+            erros.Add("O campo \"CNPJ\" deve conter no máximo 50 caracteres.");
+
+        return erros;
     }
 
-    public override string ToString() => $"{Id} : {Nome} - {CNPJ} - {Telefone}";
-
-    #endregion
+    public override void Atualizar(Fornecedor entidadeAtualizada)
+    {
+        Nome = entidadeAtualizada.Nome;
+        Telefone = entidadeAtualizada.Telefone;
+        CNPJ = entidadeAtualizada.CNPJ;
+    }
 }
