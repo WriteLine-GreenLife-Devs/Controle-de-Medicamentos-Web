@@ -102,4 +102,19 @@ public class ServicoPaciente
             .ToList();
     }
 
+     public Result<ListarPacientesDto> SelecionarPorId(Guid id)
+    {
+        Paciente? paciente = repositorioPaciente.SelecionarPorId(id);
+
+        if (paciente == null)
+            return Result.Fail("Paciente não encontrado.");
+
+        return Result.Ok(new ListarPacientesDto(
+            paciente.Id,
+            paciente.Nome,
+            paciente.Telefone,
+            paciente.CartaoSUS,
+            paciente.CPF
+        ));
+    }
 }
