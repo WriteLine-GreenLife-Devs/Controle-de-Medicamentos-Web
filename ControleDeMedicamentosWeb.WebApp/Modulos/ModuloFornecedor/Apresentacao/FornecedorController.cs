@@ -20,7 +20,12 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        CadastrarFornecedorViewModel cadastrarVm = new CadastrarFornecedorViewModel(string.Empty, string.Empty, string.Empty, "#0d6efd");
+        CadastrarFornecedorViewModel cadastrarVm = new CadastrarFornecedorViewModel(
+            string.Empty,
+            string.Empty,
+            string.Empty
+            //"#0d6efd"
+            );
 
         return View(cadastrarVm);
     }
@@ -31,7 +36,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
         if (!ModelState.IsValid)
             return View(cadastrarVm);
 
-        CadastrarFornecedoresDto dto = mapeador.Map<CadastrarFornecedoresDto>(cadastrarVm);
+        CadastrarFornecedorDto dto = mapeador.Map<CadastrarFornecedorDto>(cadastrarVm);
         Result resultado = servicoFornecedor.Cadastrar(dto);
 
         if (resultado.IsFailed)
@@ -67,7 +72,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
         if (!ModelState.IsValid)
             return View(editarVm);
 
-        EditarFornecedoresDto dto = mapeador.Map<EditarFornecedoresDto>(editarVm);
+        EditarFornecedorDto dto = mapeador.Map<EditarFornecedorDto>(editarVm);
         Result resultado = servicoFornecedor.Editar(dto);
 
         if (resultado.IsFailed)

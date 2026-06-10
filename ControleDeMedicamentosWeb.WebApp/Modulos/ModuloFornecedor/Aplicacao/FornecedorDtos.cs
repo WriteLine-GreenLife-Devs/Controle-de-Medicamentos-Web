@@ -7,13 +7,13 @@ public record ListarFornecedoresDto(
     string CNPJ
 );
 
-public record CadastrarFornecedoresDto(
+public record CadastrarFornecedorDto(
     string Nome,
     string Telefone,
     string CNPJ
 );
 
-public record EditarFornecedoresDto(
+public record EditarFornecedorDto(
     Guid Id,
     string Nome,
     string Telefone,

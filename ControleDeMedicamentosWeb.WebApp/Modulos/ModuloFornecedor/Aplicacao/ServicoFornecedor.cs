@@ -17,7 +17,7 @@ public class ServicoFornecedor
         //this.repositorioMedicamento = repositorioMedicamento;
     }
 
-    public Result Cadastrar(CadastrarFornecedoresDto dto)
+    public Result Cadastrar(CadastrarFornecedorDto dto)
     {
         if (ExisteFornecedorComNome(dto.Nome))
             return Falha(nameof(dto.Nome), "Já existe uma Fornecedor com este nome.");
@@ -34,7 +34,7 @@ public class ServicoFornecedor
         return Result.Ok();
     }
 
-    public Result Editar(EditarFornecedoresDto dto)
+    public Result Editar(EditarFornecedorDto dto)
     {
         if (ExisteFornecedorComNome(dto.Nome, dto.Id))
             return Falha(nameof(dto.Nome), "Já existe uma Fornecedor com este nome.");
