@@ -32,7 +32,7 @@ else
                             <h5 class="card-title mb-0">@f.Nome</h5>
                             <span class="badge text-bg-primary rounded-pill">@f.Id.ToString().Substring(0, 8)</span>
                         </div>
-
+@*
                         <dl class="row g-2 mb-4">
                             <dt class="col-6 text-secondary fw-semibold">Cor</dt>
                             <dd class="col-6 mb-0 text-break">
@@ -40,7 +40,7 @@ else
                                 @f.Cor
                             </dd>
                         </dl>
-
+*@
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
                             <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@f.Id">Editar</a>
                             <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@f.Id">Excluir</a>
