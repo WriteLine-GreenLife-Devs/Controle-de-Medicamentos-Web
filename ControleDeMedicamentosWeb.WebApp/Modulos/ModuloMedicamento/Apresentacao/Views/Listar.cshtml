@@ -33,11 +33,18 @@ else
             <tbody>
                 @foreach (ListarMedicamentosViewModel p in Model)
                 {
-                    <tr>
+                    bool emFalta = p.quantidade < 20;
+                    <tr class="@(emFalta ? "table-danger" : "")">
                         <td>@p.Id</td>
                         <td>@p.nome</td>
                         <td>@p.descricao</td>
-                        <td>@p.quantidade</td>
+                        <td>
+                            @p.quantidade
+                            @if (emFalta)
+                            {
+                                <span class="badge bg-danger ms-2">Em falta</span>
+                            }
+                        </td>
                         <td>@p.fornecedorNome</td>
                         <td>
                             <a asp-action="Editar" asp-route-id="@p.Id">Editar</a>
