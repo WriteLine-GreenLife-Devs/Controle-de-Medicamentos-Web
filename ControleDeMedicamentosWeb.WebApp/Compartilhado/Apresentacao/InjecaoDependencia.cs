@@ -1,4 +1,5 @@
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFuncionario.Apresentacao;
+using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Apresentacao;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloPaciente.Apresentacao;
 
 namespace ControleDeMedicamentosWeb.WebApp.Compartilhado.Apresentacao;
@@ -24,6 +25,7 @@ public static class InjecaoDependencia
             // config.AddMaps(typeof(Program));
             config.AddProfile<PacienteProfile>();
             config.AddProfile<FuncionarioProfile>();
+            config.AddProfile<MedicamentoProfile>();
         });
     }
 }
