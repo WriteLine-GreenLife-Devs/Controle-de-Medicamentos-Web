@@ -35,10 +35,12 @@ public sealed class Paciente : EntidadeBase<Paciente>
 
         if (tamanho == 10)
         {
+            Telefone = long.Parse(apenasNumeros).ToString(@"(00) 0000-0000");
             return long.Parse(apenasNumeros).ToString(@"(00) 0000-0000");
         }
         else if (tamanho == 11)
         {
+            Telefone = long.Parse(apenasNumeros).ToString(@"(00) 0 0000-0000");
             return long.Parse(apenasNumeros).ToString(@"(00) 0 0000-0000");
         }
         else
@@ -54,6 +56,7 @@ public sealed class Paciente : EntidadeBase<Paciente>
 
         if (tamanho == 11)
         {
+            CPF = Convert.ToUInt64(apenasNumeros).ToString(@"000\.000\.000\-00");
             return Convert.ToUInt64(apenasNumeros).ToString(@"000\.000\.000\-00");
         }
         else

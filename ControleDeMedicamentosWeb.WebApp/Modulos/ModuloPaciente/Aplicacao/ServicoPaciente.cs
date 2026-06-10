@@ -20,6 +20,11 @@ public class ServicoPaciente
     {
         return repositorioPaciente.SelecionarTodos().Any(p => p.CartaoSUS == cartaoSUS);
     }
+
+    private bool VerificarCartaoSUSExistenteEditado(string cartaoSUS, Guid Id)
+    {
+        return repositorioPaciente.SelecionarTodos().Any(p => p.CartaoSUS == cartaoSUS && p.Id != Id);
+    }
     private static Result ValidarEntidade(Paciente paciente)
     {
         List<string> erros = paciente.Validar();
@@ -69,7 +74,7 @@ public class ServicoPaciente
         if (paciente == null)
             return Result.Fail("Paciente não encontrado.");
 
-        if (VerificarCartaoSUSExistente(dto.cartaoSUS))
+        if (VerificarCartaoSUSExistenteEditado(dto.cartaoSUS, dto.Id))
             return Falha(nameof(dto.cartaoSUS), "Já existe um paciente cadastrado com este Cartão SUS.");
 
         Paciente pacienteAtualizado = new Paciente(
