@@ -5,13 +5,23 @@ namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Apresentacao
 public record ListarFornecedoresViewModel(
     Guid Id,
     string Nome,
+    string Telefone,
+    string CNPJ,
     string Cor
 );
 
 public record CadastrarFornecedorViewModel(
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
-    [StringLength(50, ErrorMessage = "O campo \"Nome\" deve conter no máximo 50 caracteres.")]
+    [StringLength(100, ErrorMessage = "O campo \"Nome\" deve conter no máximo 100 caracteres.")]
     string Nome,
+
+    [Required(ErrorMessage = "O campo \"Telefone\" deve ser preenchido.")]
+    [StringLength(11, ErrorMessage = "O campo \"Nome\" deve conter no máximo 11 caracteres.")]
+    string Telefone,
+
+    [Required(ErrorMessage = "O campo \"CNPJ\" deve ser preenchido.")]
+    [StringLength(14, ErrorMessage = "O campo \"Nome\" deve conter no máximo 14 caracteres.")]
+    string CNPJ,
 
     [Required(ErrorMessage = "O campo \"Cor\" deve ser preenchido.")]
     string Cor

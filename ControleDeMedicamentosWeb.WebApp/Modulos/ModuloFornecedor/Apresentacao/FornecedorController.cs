@@ -20,7 +20,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        CadastrarFornecedorViewModel cadastrarVm = new CadastrarFornecedorViewModel(string.Empty, "#0d6efd");
+        CadastrarFornecedorViewModel cadastrarVm = new CadastrarFornecedorViewModel(string.Empty, string.Empty, string.Empty, "#0d6efd");
 
         return View(cadastrarVm);
     }

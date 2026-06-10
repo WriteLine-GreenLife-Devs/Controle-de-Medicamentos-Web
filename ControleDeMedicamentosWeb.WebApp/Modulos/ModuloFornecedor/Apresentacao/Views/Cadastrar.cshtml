@@ -13,6 +13,18 @@
     </div>
 
     <div class="mb-3">
+        <label asp-for="Telefone" class="form-label fw-semibold text-primary text-uppercase small">Telefone</label>
+        <input asp-for="Telefone" type="text" class="form-control">
+        <span asp-validation-for="Telefone" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CNPJ" class="form-label fw-semibold text-primary text-uppercase small">Telefone</label>
+        <input asp-for="CNPJ" type="text" class="form-control">
+        <span asp-validation-for="CNPJ" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
         <label asp-for="Cor" class="form-label fw-semibold text-primary text-uppercase small">Cor</label>
         <input asp-for="Cor" type="color" class="form-control form-control-color">
         <span asp-validation-for="Cor" class="text-danger small fw-semibold"></span>
