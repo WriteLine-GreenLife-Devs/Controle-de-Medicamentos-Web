@@ -6,6 +6,7 @@ public class Fornecedor : EntidadeBase<Fornecedor>
     public string Telefone = string.Empty;
     public string CNPJ = string.Empty;
 
+    public Fornecedor() { }
     public Fornecedor(string nome, string telefone, string cnpj)
     {
         Nome = nome;
