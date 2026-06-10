@@ -8,8 +8,13 @@ public class FuncionarioProfile : Profile
 {
     public FuncionarioProfile()
     {
+        CreateMap<CadastrarFuncionarioViewModel, CadastrarFuncionarioDto>();
+        CreateMap<EditarFuncionarioViewModel, EditarFuncionarioDto>();
         CreateMap<CadastrarFuncionarioDto, Funcionario>();
         CreateMap<EditarFuncionarioDto, Funcionario>();
         CreateMap<Funcionario, ListarFuncionariosDto>();
+        CreateMap<ListarFuncionariosDto, ListarFuncionariosViewModel>();
+        CreateMap<ListarFuncionariosDto, EditarFuncionarioViewModel>();
+        CreateMap<ListarFuncionariosDto, ExcluirFuncionarioViewModel>();
     }
 }
