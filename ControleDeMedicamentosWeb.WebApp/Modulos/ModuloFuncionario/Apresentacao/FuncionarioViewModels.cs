@@ -6,7 +6,6 @@ public record ListarFuncionariosViewModel(
     Guid Id,
     string Nome,
     string Telefone,
-    string CartaoSUS,
     string Cpf
 );
 
