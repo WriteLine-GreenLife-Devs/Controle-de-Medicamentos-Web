@@ -1,10 +1,12 @@
 using ControleDeMedicamentosWeb.WebApp.Compartilhado.Dominio;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Net.Http.Headers;
 
 public class Fornecedor : EntidadeBase<Fornecedor>
 {
-    public string Nome = string.Empty;
-    public string Telefone = string.Empty;
-    public string CNPJ = string.Empty;
+     public string Nome { get; set; } = string.Empty;
+    public string Telefone { get; set; } = string.Empty;
+    public string CNPJ { get; set; } = string.Empty;
 
     public Fornecedor() { }
     public Fornecedor(string nome, string telefone, string cnpj)
