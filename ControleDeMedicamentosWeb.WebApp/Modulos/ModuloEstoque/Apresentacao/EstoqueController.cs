@@ -25,7 +25,16 @@ public class EstoqueController(ServicoEstoque servicoEstoque, IMapper mapeador) 
     [HttpGet]
     public ActionResult CadastrarEntrada()
     {
-        return View(new CadastrarEntradaViewModel(DateTime.Now, Guid.Empty, Guid.Empty, 0));
+        CadastrarEntradaViewModel vm = new(
+            DateTime.Now,
+            Guid.Empty,
+            Guid.Empty,
+            0,
+            servicoEstoque.SelecionarMedicamentos().Select(m => new OpcaoMedicamentoViewModel(m.Id, m.Nome)).ToList(),
+            servicoEstoque.SelecionarFuncionarios().Select(f => new OpcaoFuncionarioViewModel(f.Id, f.Nome)).ToList()
+        );
+
+        return View(vm);
     }
 
     [HttpPost]
@@ -49,7 +58,15 @@ public class EstoqueController(ServicoEstoque servicoEstoque, IMapper mapeador) 
     [HttpGet]
     public ActionResult CadastrarSaida()
     {
-        return View(new CadastrarSaidaViewModel(DateTime.Now, Guid.Empty, new List<MedicamentoSaidaViewModel>()));
+        CadastrarSaidaViewModel vm = new(
+            DateTime.Now,
+            Guid.Empty,
+            new List<MedicamentoSaidaViewModel>(),
+            servicoEstoque.SelecionarPacientes().Select(p => new OpcaoPacienteViewModel(p.Id, p.Nome)).ToList(),
+            servicoEstoque.SelecionarMedicamentos().Select(m => new OpcaoMedicamentoViewModel(m.Id, m.Nome)).ToList()
+        );
+
+        return View(vm);
     }
 
     [HttpPost]

@@ -1,19 +1,28 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque.Apresentacao;
+
+public record OpcaoMedicamentoViewModel(Guid Id, string Nome);
+public record OpcaoFuncionarioViewModel(Guid Id, string Nome);
+public record OpcaoPacienteViewModel(Guid Id, string Nome);
 
 public record CadastrarEntradaViewModel(
     [Required] DateTime Data,
     [Required] Guid MedicamentoId,
     [Required] Guid FuncionarioId,
     [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser positiva.")]
-    int Quantidade
+    int Quantidade,
+    [ValidateNever] List<OpcaoMedicamentoViewModel> MedicamentosDisponiveis,
+    [ValidateNever] List<OpcaoFuncionarioViewModel> Funcionarios
 );
 
 public record CadastrarSaidaViewModel(
     [Required] DateTime Data,
     [Required] Guid PacienteId,
-    [Required] List<MedicamentoSaidaViewModel> Medicamentos
+    [Required] List<MedicamentoSaidaViewModel> Medicamentos,
+    [ValidateNever] List<OpcaoPacienteViewModel> Pacientes,
+    [ValidateNever] List<OpcaoMedicamentoViewModel> MedicamentosDisponiveis
 );
 
 public record MedicamentoSaidaViewModel(

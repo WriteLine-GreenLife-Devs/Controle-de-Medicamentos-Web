@@ -13,67 +13,69 @@
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
-    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
-        @mensagemErro
-    </div>
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3">@mensagemErro</div>
 }
 
 <h4 class="text-primary mt-4">Entradas</h4>
 @if (Model.Entradas.Count == 0)
 {
-    <div class="alert alert-primary">Nenhuma entrada registrada.</div>
+    <div class="alert alert-primary border-start border-primary border-4 rounded-3">Nenhuma entrada registrada.</div>
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Medicamento</th>
-                <th>Funcionário</th>
-                <th>Quantidade</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (ListarEntradaViewModel e in Model.Entradas)
-            {
-                <tr>
-                    <td>@e.Data.ToShortDateString()</td>
-                    <td>@e.Medicamento</td>
-                    <td>@e.Funcionario</td>
-                    <td>@e.Quantidade</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        @foreach (ListarEntradaViewModel e in Model.Entradas)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                            <h5 class="card-title mb-0">@e.Medicamento</h5>
+                            <span class="badge text-bg-primary rounded-pill">@e.Id.ToString().Substring(0, 8)</span>
+                        </div>
+                        <dl class="row g-2 mb-4">
+                            <dt class="col-6 text-secondary fw-semibold">Data</dt>
+                            <dd class="col-6 mb-0">@e.Data.ToString("dd/MM/yyyy HH:mm")</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Funcionário</dt>
+                            <dd class="col-6 mb-0">@e.Funcionario</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Quantidade</dt>
+                            <dd class="col-6 mb-0">@e.Quantidade</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 <h4 class="text-primary mt-4">Saídas</h4>
 @if (Model.Saidas.Count == 0)
 {
-    <div class="alert alert-primary">Nenhuma saída registrada.</div>
+    <div class="alert alert-primary border-start border-primary border-4 rounded-3">Nenhuma saída registrada.</div>
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Paciente</th>
-                <th>Medicamentos</th>
-                <th>Quantidade Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (ListarSaidaViewModel s in Model.Saidas)
-            {
-                <tr>
-                    <td>@s.Data.ToShortDateString()</td>
-                    <td>@s.Paciente</td>
-                    <td>@string.Join(", ", s.Medicamentos)</td>
-                    <td>@s.QuantidadeTotal</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        @foreach (ListarSaidaViewModel s in Model.Saidas)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                            <h5 class="card-title mb-0">@s.Paciente</h5>
+                            <span class="badge text-bg-primary rounded-pill">@s.Id.ToString().Substring(0, 8)</span>
+                        </div>
+                        <dl class="row g-2 mb-4">
+                            <dt class="col-6 text-secondary fw-semibold">Data</dt>
+                            <dd class="col-6 mb-0">@s.Data.ToShortDateString()</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Medicamentos</dt>
+                            <dd class="col-6 mb-0">@string.Join(", ", s.Medicamentos)</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Quantidade Total</dt>
+                            <dd class="col-6 mb-0">@s.QuantidadeTotal</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }

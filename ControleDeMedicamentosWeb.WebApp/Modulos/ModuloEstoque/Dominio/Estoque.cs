@@ -1,23 +1,21 @@
-using System.Dynamic;
-using System.Linq;
 using ControleDeMedicamentosWeb.WebApp.Compartilhado.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFuncionario.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Dominio;
-using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloPaciente;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloPaciente.Dominio;
 
-namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque;
+namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque.Dominio;
 
 public sealed class Estoque : EntidadeBase<Estoque>
 {
     public DateTime Data { get; set; } = DateTime.Now;
-    public Medicamento? MedicamentoEntrada { get; set; } = null;
-    public Funcionario? FuncionarioEntrada { get; set; } = null;
-    public int QuantidadeEntrada { get; set; } = 0;
-    public string TipoOperacao { get; set; } = "";
-    public Paciente? PacienteSaida { get; set; } = null;
-    public List<MedicamentoSaida> MedicamentosSaida { get; set; } = [];
-    public int QuantidadeSaida { get; set; } = 0;
+    public Medicamento? MedicamentoEntrada { get; set; }
+    public Funcionario? FuncionarioEntrada { get; set; }
+    public int QuantidadeEntrada { get; set; }
+    public string TipoOperacao { get; set; } = string.Empty;
+    public Paciente? PacienteSaida { get; set; }
+    public List<MedicamentoSaida> MedicamentosSaida { get; set; } = new();
+    public int QuantidadeSaida { get; set; }
+
     public Estoque() { }
 
     public Estoque(DateTime data, Medicamento medicamento, Funcionario funcionario, int quantidade)
@@ -52,15 +50,37 @@ public sealed class Estoque : EntidadeBase<Estoque>
 
     public override List<string> Validar()
     {
-        List<string> erros = new List<string>();
+        List<string> erros = new();
 
-        //mensagens das validações... serão necessárias?
+        if (TipoOperacao == "Entrada")
+        {
+            if (MedicamentoEntrada == null)
+                erros.Add("O campo \"Medicamento\" deve ser informado.");
+
+            if (FuncionarioEntrada == null)
+                erros.Add("O campo \"Funcionário\" deve ser informado.");
+
+            if (QuantidadeEntrada <= 0)
+                erros.Add("O campo \"Quantidade\" deve ser um número positivo.");
+        }
+
+        if (TipoOperacao == "Saída")
+        {
+            if (PacienteSaida == null)
+                erros.Add("O campo \"Paciente\" deve ser informado.");
+
+            if (MedicamentosSaida == null || MedicamentosSaida.Count == 0)
+                erros.Add("É necessário informar ao menos um medicamento.");
+
+            if (QuantidadeSaida <= 0)
+                erros.Add("O campo \"Quantidade\" deve ser um número positivo.");
+        }
 
         return erros;
     }
 }
 
-public class MedicamentoSaida
+public sealed class MedicamentoSaida
 {
     public Medicamento? Medicamento { get; set; }
     public int Quantidade { get; set; }

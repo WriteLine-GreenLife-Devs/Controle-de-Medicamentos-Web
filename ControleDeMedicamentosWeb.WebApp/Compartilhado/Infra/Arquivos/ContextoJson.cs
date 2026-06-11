@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque;
+using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFuncionario.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Dominio;

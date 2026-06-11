@@ -6,49 +6,57 @@
 
 @model CadastrarSaidaViewModel;
 
-<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="CadastrarSaida"
-      method="post">
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 720px;" asp-action="CadastrarSaida" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger small fw-semibold mb-3"></div>
+
     <div class="mb-3">
-        <label asp-for="Data" class="form-label">Data</label>
-        <input asp-for="Data" type="date" class="form-control" />
-        <span asp-validation-for="Data" class="text-danger"></span>
+        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data</label>
+        <input asp-for="Data" type="date" class="form-control">
+        <span asp-validation-for="Data" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="PacienteId" class="form-label">Paciente</label>
-        <select asp-for="PacienteId" class="form-select"></select>
-        <span asp-validation-for="PacienteId" class="text-danger"></span>
+        <label asp-for="PacienteId" class="form-label fw-semibold text-primary text-uppercase small">Paciente</label>
+        <select asp-for="PacienteId" class="form-select">
+            <option value="">Selecione um paciente</option>
+            @foreach (OpcaoPacienteViewModel paciente in Model.Pacientes)
+            {
+                <option value="@paciente.Id">@paciente.Nome</option>
+            }
+        </select>
+        <span asp-validation-for="PacienteId" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Medicamentos</label>
-        <div id="medicamentos-list">
-            <div id="medicamentos-list"></div>
-            <button type="button" class="btn btn-outline-primary" onclick="adicionarMedicamento()">Adicionar
-                Medicamento</button>
+        <label class="form-label fw-semibold text-primary text-uppercase small">Medicamentos</label>
+        <div id="medicamentos-list"></div>
+        <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-2" onclick="adicionarMedicamento()">Adicionar Medicamento</button>
+    </div>
 
-                <script>
-                            function adicionarMedicamento() {
-                            const container = document.getElementById("medicamentos-list");
+    <script>
+        let index = 0;
+        function adicionarMedicamento() {
+            const container = document.getElementById("medicamentos-list");
+            const div = document.createElement("div");
+            div.classList.add("mb-2");
 
-                            const div = document.createElement("div");
-                            div.classList.add("mb-2");
+            div.innerHTML = `
+                <select name="Medicamentos[${index}].MedicamentoId" class="form-select mb-1">
+                    <option value="">Selecione</option>
+                    @foreach (OpcaoMedicamentoViewModel med in Model.MedicamentosDisponiveis)
+                    {
+                        <text><option value="@med.Id">@med.Nome</option></text>
+                    }
+                </select>
+                <input name="Medicamentos[${index}].Quantidade" type="number" class="form-control" placeholder="Quantidade" />
+            `;
+            container.appendChild(div);
+            index++;
+        }
+    </script>
 
-                        div.innerHTML = `
-                            <select name="Medicamentos[index].MedicamentoId" class="form-select">
-                            <!-- opções de medicamentos -->
-                                </select>
-                                <input name="Medicamentos[index].Quantidade" type="number" class="form-control mt-1" placeholder="Quantidade" />
-                            `;
-                            container.appendChild(div);
-                        }
-                </script>
-
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-end gap-2 mt-4">
-            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
-            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
-        </div>
-    </form>
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+        <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+    </div>
+</form>

@@ -7,28 +7,42 @@
 @model CadastrarEntradaViewModel;
 
 <form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="CadastrarEntrada" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger small fw-semibold mb-3"></div>
+
     <div class="mb-3">
-        <label asp-for="Data" class="form-label">Data</label>
-        <input asp-for="Data" type="date" class="form-control" />
-        <span asp-validation-for="Data" class="text-danger"></span>
+        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data</label>
+        <input asp-for="Data" type="date" class="form-control">
+        <span asp-validation-for="Data" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="MedicamentoId" class="form-label">Medicamento</label>
-        <select asp-for="MedicamentoId" class="form-select"></select>
-        <span asp-validation-for="MedicamentoId" class="text-danger"></span>
+        <label asp-for="MedicamentoId" class="form-label fw-semibold text-primary text-uppercase small">Medicamento</label>
+        <select asp-for="MedicamentoId" class="form-select">
+            <option value="">Selecione um medicamento</option>
+            @foreach (OpcaoMedicamentoViewModel med in Model.MedicamentosDisponiveis)
+            {
+                <option value="@med.Id">@med.Nome</option>
+            }
+        </select>
+        <span asp-validation-for="MedicamentoId" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="FuncionarioId" class="form-label">Funcionário</label>
-        <select asp-for="FuncionarioId" class="form-select"></select>
-        <span asp-validation-for="FuncionarioId" class="text-danger"></span>
+        <label asp-for="FuncionarioId" class="form-label fw-semibold text-primary text-uppercase small">Funcionário</label>
+        <select asp-for="FuncionarioId" class="form-select">
+            <option value="">Selecione um funcionário</option>
+            @foreach (OpcaoFuncionarioViewModel func in Model.Funcionarios)
+            {
+                <option value="@func.Id">@func.Nome</option>
+            }
+        </select>
+        <span asp-validation-for="FuncionarioId" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Quantidade" class="form-label">Quantidade</label>
-        <input asp-for="Quantidade" type="number" class="form-control" />
-        <span asp-validation-for="Quantidade" class="text-danger"></span>
+        <label asp-for="Quantidade" class="form-label fw-semibold text-primary text-uppercase small">Quantidade</label>
+        <input asp-for="Quantidade" type="number" class="form-control">
+        <span asp-validation-for="Quantidade" class="text-danger small fw-semibold"></span>
     </div>
 
     <div class="d-flex justify-content-end gap-2 mt-4">
