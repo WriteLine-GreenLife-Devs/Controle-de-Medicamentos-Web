@@ -320,8 +320,6 @@ no Visual Studio.
 
 # 📸 Telas do Sistema
 
-Adicione aqui capturas de tela do sistema.
-
 ### Tela Inicial
 
 <p align="center">
