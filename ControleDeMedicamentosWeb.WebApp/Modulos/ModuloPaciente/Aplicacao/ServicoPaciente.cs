@@ -32,7 +32,14 @@ public class ServicoPaciente
         if (erros.Count == 0)
             return Result.Ok();
 
-        return Result.Fail(new Error(erros.First()).WithMetadata("Campo", string.Empty));
+        string erro = erros.First();
+        string campo = erro.Contains("Nome") ? nameof(paciente.Nome)
+            : erro.Contains("Telefone") ? nameof(paciente.Telefone)
+            : erro.Contains("Cartão SUS") || erro.Contains("CartaoSUS") ? nameof(paciente.CartaoSUS)
+            : erro.Contains("CPF") ? nameof(paciente.CPF)
+            : string.Empty;
+
+        return Result.Fail(new Error(erro).WithMetadata("Campo", campo));
     }
 
     public Result Cadastrar(CadastrarPacienteDto dto)

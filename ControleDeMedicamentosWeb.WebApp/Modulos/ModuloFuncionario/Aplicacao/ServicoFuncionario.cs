@@ -31,13 +31,19 @@ public class ServicoFuncionario
         if (erros.Count == 0)
             return Result.Ok();
 
-        return Result.Fail(new Error(erros.First()).WithMetadata("Campo", string.Empty));
+        string erro = erros.First();
+        string campo = erro.Contains("Nome") ? nameof(funcionario.Nome)
+            : erro.Contains("Telefone") ? nameof(funcionario.Telefone)
+            : erro.Contains("CPF") ? nameof(funcionario.CPF)
+            : string.Empty;
+
+        return Result.Fail(new Error(erro).WithMetadata("Campo", campo));
     }
 
     public Result Cadastrar(CadastrarFuncionarioDto dto)
     {
         if (VerificarCPFExistente(dto.cpf))
-            return Falha(nameof(dto.cpf), "Já existe um funcionário cadastrado com este CPF.");
+            return Falha(nameof(CadastrarFuncionarioDto.cpf), "Já existe um funcionário cadastrado com este CPF.");
 
         Funcionario novoFuncionario = new(
             nome: dto.nome,
@@ -73,7 +79,7 @@ public class ServicoFuncionario
             return Result.Fail("Funcionário não encontrado.");
 
         if (VerificarCPFExistenteEditar(dto.cpf, dto.Id))
-            return Falha(nameof(dto.cpf), "Já existe um funcionário cadastrado com este CPF.");
+            return Falha(nameof(CadastrarFuncionarioDto.cpf), "Já existe um funcionário cadastrado com este CPF.");
 
         Funcionario funcionarioAtualizado = new Funcionario(
             nome: dto.nome,

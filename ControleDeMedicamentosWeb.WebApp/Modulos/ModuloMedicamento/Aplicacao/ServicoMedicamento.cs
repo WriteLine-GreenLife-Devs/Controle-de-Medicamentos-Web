@@ -19,20 +19,27 @@ public class ServicoMedicamento
     {
         return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
     }
-    private static Result ValidarEntidade( Medicamento medicamento)
+    private static Result ValidarEntidade(Medicamento medicamento)
     {
         List<string> erros = medicamento.Validar();
 
         if (erros.Count == 0)
             return Result.Ok();
 
-        return Result.Fail(new Error(erros.First()).WithMetadata("Campo", string.Empty));
+        string erro = erros.First();
+        string campo = erro.Contains("Nome") ? nameof(medicamento.Nome)
+            : erro.Contains("Descrição") || erro.Contains("Descrição") ? nameof(medicamento.Descricao)
+            : erro.Contains("Quantidade") ? nameof(medicamento.Quantidade)
+            : erro.Contains("Fornecedor") ? "Fornecedores"
+            : string.Empty;
+
+        return Result.Fail(new Error(erro).WithMetadata("Campo", campo));
     }
 
     public Result Cadastrar(CadastrarMedicamentoDto dto)
     {
          if (repositorioFornecedor.SelecionarPorId(dto.idFornecedor) == null)
-            return Falha(nameof(dto.idFornecedor), "Fornecedor não encontrado.");
+            return Falha("Fornecedores", "Fornecedor não encontrado.");
 
         Medicamento novoMedicamento = new(
             nome: dto.nome,
