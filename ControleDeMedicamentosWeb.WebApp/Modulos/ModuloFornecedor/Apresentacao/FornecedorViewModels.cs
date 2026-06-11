@@ -7,7 +7,6 @@ public record ListarFornecedoresViewModel(
     string Nome,
     string Telefone,
     string CNPJ
-    //string Cor
 );
 
 public record CadastrarFornecedorViewModel(
@@ -16,15 +15,13 @@ public record CadastrarFornecedorViewModel(
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Telefone\" deve ser preenchido.")]
-    [StringLength(11, ErrorMessage = "O campo \"Nome\" deve conter no máximo 11 caracteres.")]
+    [StringLength(11, MinimumLength = 8, ErrorMessage = "O campo \"Telefone\" deve conter entre 8 e 11 dígitos.")]
+    [RegularExpression(@"^\d{8,11}$", ErrorMessage = "O campo \"Telefone\" deve conter apenas números.")]
     string Telefone,
 
     [Required(ErrorMessage = "O campo \"CNPJ\" deve ser preenchido.")]
-    [StringLength(14, ErrorMessage = "O campo \"Nome\" deve conter no máximo 14 caracteres.")]
+    [StringLength(14, ErrorMessage = "O campo \"CNPJ\" deve conter no máximo 14 caracteres.")]
     string CNPJ
-
-    //[Required(ErrorMessage = "O campo \"Cor\" deve ser preenchido.")]
-    //string Cor
 );
 
 public record EditarFornecedorViewModel(
@@ -35,15 +32,12 @@ public record EditarFornecedorViewModel(
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Telefone\" deve ser preenchido.")]
-    [StringLength(11, ErrorMessage = "O campo \"Nome\" deve conter no máximo 11 caracteres.")]
+    [StringLength(11, ErrorMessage = "O campo \"Telefone\" deve conter no máximo 11 caracteres.")]
     string Telefone,
 
     [Required(ErrorMessage = "O campo \"CNPJ\" deve ser preenchido.")]
-    [StringLength(14, ErrorMessage = "O campo \"Nome\" deve conter no máximo 14 caracteres.")]
+    [StringLength(14, ErrorMessage = "O campo \"CNPJ\" deve conter no máximo 14 caracteres.")]
     string CNPJ
-
-    //[Required(ErrorMessage = "O campo \"Cor\" deve ser preenchido.")]
-    //string Cor
 );
 
 public record ExcluirFornecedorViewModel(
@@ -51,5 +45,4 @@ public record ExcluirFornecedorViewModel(
     string Nome,
     string Telefone,
     string CNPJ
-    //string Cor
 );

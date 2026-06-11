@@ -1,5 +1,6 @@
 using FluentResults;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Dominio;
+using ControleDeMedicamentosWeb.WebApp.Compartilhado;
 //using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Dominio;
 
 namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Aplicacao;
@@ -10,7 +11,7 @@ public class ServicoFornecedor
 
     public ServicoFornecedor(
         IRepositorioFornecedor repositorioFornecedor
-        //IRepositorioMedicamento repositorioMedicamento
+    //IRepositorioMedicamento repositorioMedicamento
     )
     {
         this.repositorioFornecedor = repositorioFornecedor;
@@ -21,6 +22,12 @@ public class ServicoFornecedor
     {
         if (ExisteFornecedorComNome(dto.Nome))
             return Falha(nameof(dto.Nome), "Já existe uma Fornecedor com este nome.");
+
+        if (ExisteFornecedorComTelefone(dto.Telefone))
+            return Falha(nameof(dto.Telefone), "Já existe um fornecedor com este telefone.");
+
+        if (ExisteFornecedorComCnpj(dto.CNPJ))
+            return Falha(nameof(dto.CNPJ), "Já existe um fornecedor com este CNPJ.");
 
         Fornecedor novaFornecedor = new Fornecedor(dto.Nome, dto.Telefone, dto.CNPJ);
 
@@ -93,11 +100,37 @@ public class ServicoFornecedor
 
     private bool ExisteFornecedorComNome(string nome, Guid? idIgnorado = null)
     {
+        string nomeNormalizado = Servico.NormalizarTexto(nome);
+
         return repositorioFornecedor
             .SelecionarTodos()
             .Any(f =>
                 f.Id != idIgnorado &&
-                string.Equals(f.Nome, nome, StringComparison.OrdinalIgnoreCase)
+                Servico.NormalizarTexto(f.Nome) == nomeNormalizado
+            );
+    }
+
+    private bool ExisteFornecedorComTelefone(string telefone, Guid? idIgnorado = null)
+    {
+        string telefoneNormalizado = Servico.NormalizarNumeros(telefone);
+
+        return repositorioFornecedor
+            .SelecionarTodos()
+            .Any(f =>
+                f.Id != idIgnorado &&
+                Servico.NormalizarNumeros(f.Telefone) == telefoneNormalizado
+            );
+    }
+
+    private bool ExisteFornecedorComCnpj(string cnpj, Guid? idIgnorado = null)
+    {
+        string cnpjNormalizado = Servico.NormalizarNumeros(cnpj);
+
+        return repositorioFornecedor
+            .SelecionarTodos()
+            .Any(f =>
+                f.Id != idIgnorado &&
+                Servico.NormalizarNumeros(f.CNPJ) == cnpjNormalizado
             );
     }
 
