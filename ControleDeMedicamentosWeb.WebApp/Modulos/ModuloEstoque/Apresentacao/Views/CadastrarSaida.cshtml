@@ -10,8 +10,8 @@
     <div asp-validation-summary="ModelOnly" class="text-danger small fw-semibold mb-3"></div>
 
     <div class="mb-3">
-        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data</label>
-        <input asp-for="Data" type="date" class="form-control">
+        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data e Hora</label>
+        <input asp-for="Data" type="datetime-local" class="form-control" value="@Model.Data.ToString("yyyy-MM-ddTHH:mm")">
         <span asp-validation-for="Data" class="text-danger small fw-semibold"></span>
     </div>
 
@@ -29,12 +29,28 @@
 
     <div class="mb-3">
         <label class="form-label fw-semibold text-primary text-uppercase small">Medicamentos</label>
-        <div id="medicamentos-list"></div>
+        <div id="medicamentos-list">
+            @for (int i = 0; i < Model.Medicamentos.Count; i++)
+            {
+                <div class="mb-2">
+                    <select name="Medicamentos[@i].MedicamentoId" class="form-select mb-1">
+                        <option value="">Selecione</option>
+                        @foreach (OpcaoMedicamentoViewModel medicamento in Model.MedicamentosDisponiveis)
+                        {
+                            <option value="@medicamento.Id" selected="@(medicamento.Id == Model.Medicamentos[i].MedicamentoId)">
+                                @medicamento.Nome
+                            </option>
+                        }
+                    </select>
+                    <input name="Medicamentos[@i].Quantidade" type="number" class="form-control" value="@Model.Medicamentos[i].Quantidade" placeholder="Quantidade" />
+                </div>
+            }
+        </div>
         <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-2" onclick="adicionarMedicamento()">Adicionar Medicamento</button>
     </div>
 
     <script>
-        let index = 0;
+        let index = @Model.Medicamentos.Count;
         function adicionarMedicamento() {
             const container = document.getElementById("medicamentos-list");
             const div = document.createElement("div");
@@ -43,9 +59,9 @@
             div.innerHTML = `
                 <select name="Medicamentos[${index}].MedicamentoId" class="form-select mb-1">
                     <option value="">Selecione</option>
-                    @foreach (OpcaoMedicamentoViewModel med in Model.MedicamentosDisponiveis)
+                    @foreach (OpcaoMedicamentoViewModel medicamento in Model.MedicamentosDisponiveis)
                     {
-                        <text><option value="@med.Id">@med.Nome</option></text>
+                        <text><option value="@medicamento.Id">@medicamento.Nome</option></text>
                     }
                 </select>
                 <input name="Medicamentos[${index}].Quantidade" type="number" class="form-control" placeholder="Quantidade" />

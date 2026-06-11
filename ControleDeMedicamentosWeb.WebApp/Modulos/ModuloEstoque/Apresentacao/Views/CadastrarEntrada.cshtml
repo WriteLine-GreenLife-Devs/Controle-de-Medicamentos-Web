@@ -10,8 +10,8 @@
     <div asp-validation-summary="ModelOnly" class="text-danger small fw-semibold mb-3"></div>
 
     <div class="mb-3">
-        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data</label>
-        <input asp-for="Data" type="date" class="form-control">
+        <label asp-for="Data" class="form-label fw-semibold text-primary text-uppercase small">Data e Hora</label>
+        <input asp-for="Data" type="datetime-local" class="form-control" value="@Model.Data.ToString("yyyy-MM-ddTHH:mm")">
         <span asp-validation-for="Data" class="text-danger small fw-semibold"></span>
     </div>
 
@@ -19,9 +19,9 @@
         <label asp-for="MedicamentoId" class="form-label fw-semibold text-primary text-uppercase small">Medicamento</label>
         <select asp-for="MedicamentoId" class="form-select">
             <option value="">Selecione um medicamento</option>
-            @foreach (OpcaoMedicamentoViewModel med in Model.MedicamentosDisponiveis)
+            @foreach (OpcaoMedicamentoViewModel medicamento in Model.MedicamentosDisponiveis)
             {
-                <option value="@med.Id">@med.Nome</option>
+                <option value="@medicamento.Id">@medicamento.Nome</option>
             }
         </select>
         <span asp-validation-for="MedicamentoId" class="text-danger small fw-semibold"></span>
@@ -31,9 +31,9 @@
         <label asp-for="FuncionarioId" class="form-label fw-semibold text-primary text-uppercase small">Funcionário</label>
         <select asp-for="FuncionarioId" class="form-select">
             <option value="">Selecione um funcionário</option>
-            @foreach (OpcaoFuncionarioViewModel func in Model.Funcionarios)
+            @foreach (OpcaoFuncionarioViewModel funcionario in Model.Funcionarios)
             {
-                <option value="@func.Id">@func.Nome</option>
+                <option value="@funcionario.Id">@funcionario.Nome</option>
             }
         </select>
         <span asp-validation-for="FuncionarioId" class="text-danger small fw-semibold"></span>
