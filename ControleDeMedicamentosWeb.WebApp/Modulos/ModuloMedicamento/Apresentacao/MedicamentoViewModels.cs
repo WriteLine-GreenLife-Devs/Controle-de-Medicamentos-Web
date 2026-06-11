@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Apresentacao;
 
 public record ListarMedicamentosViewModel(
-    Guid Id,
-    string nome,
-    string descricao,
-    int quantidade,
-    string fornecedorNome
+    Guid Id = default,
+    string nome = "",
+    string descricao = "",
+    int quantidade = 0,
+    string fornecedorNome = ""
 );
 
 public record OpcaoFornecedorViewModel(
@@ -31,6 +31,9 @@ string Descricao,
     [Range(0, double.MaxValue, ErrorMessage = "O campo \"Quantidade\" deve conter um valor maior ou igual a 0.")]
 int quantidade,
 
+    [Required(ErrorMessage = "O campo \"Fornecedor\" deve ser selecionado.")]
+Guid FornecedorId,
+
 [ValidateNever]
     List<OpcaoFornecedorViewModel> Fornecedores
 );
@@ -50,14 +53,17 @@ string Descricao,
     [Range(0, double.MaxValue, ErrorMessage = "O campo \"Quantidade\" deve conter um valor maior ou igual a 0.")]
 int quantidade,
 
+    [Required(ErrorMessage = "O campo \"Fornecedor\" deve ser selecionado.")]
+Guid FornecedorId,
+
 [ValidateNever]
     List<OpcaoFornecedorViewModel> Fornecedores
 );
 
 public record ExcluirMedicamentoViewModel(
-    Guid Id,
-    string nome,
-    string descricao,
-    int quantidade,
-    string fornecedorNome
+    Guid Id = default,
+    string nome = "",
+    string descricao = "",
+    int quantidade = 0,
+    string fornecedorNome = ""
 );

@@ -1,13 +1,55 @@
 using AutoMapper;
 using ControleDeMedicamentosWeb.WebApp.Compartilhado.Apresentacao.Extensions;
+using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Dominio;
 using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Aplicacao;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeMedicamentosWeb.WebApp.Modulos.ModuloMedicamento.Apresentacao;
 
-public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMapper mapeador) : Controller
+public class MedicamentoController : Controller
 {
+    private readonly ServicoMedicamento servicoMedicamento;
+    private readonly IRepositorioFornecedor repositorioFornecedor;
+    private readonly IMapper mapeador;
+
+    public MedicamentoController(ServicoMedicamento servicoMedicamento, IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
+    {
+        this.servicoMedicamento = servicoMedicamento;
+        this.repositorioFornecedor = repositorioFornecedor;
+        this.mapeador = mapeador;
+    }
+
+    private static List<OpcaoFornecedorViewModel> ObterFornecedoresDisponiveis(IRepositorioFornecedor repositorioFornecedor)
+    {
+        return repositorioFornecedor
+            .SelecionarTodos()
+            .Select(f => new OpcaoFornecedorViewModel(f.Id, f.Nome, f.Telefone, f.CNPJ))
+            .ToList();
+    }
+
+    private CadastrarMedicamentoViewModel CriarCadastrarVm()
+    {
+        return new CadastrarMedicamentoViewModel(
+            string.Empty,
+            string.Empty,
+            0,
+            Guid.Empty,
+            ObterFornecedoresDisponiveis(repositorioFornecedor)
+        );
+    }
+
+    private EditarMedicamentoViewModel CriarEditarVm(ListarMedicamentosDto dto)
+    {
+        return new EditarMedicamentoViewModel(
+            dto.id,
+            dto.nome,
+            dto.descricao,
+            dto.quantidade,
+            dto.idFornecedor,
+            ObterFornecedoresDisponiveis(repositorioFornecedor)
+        );
+    }
 
     [HttpGet]
     public ActionResult Listar()
@@ -21,12 +63,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        CadastrarMedicamentoViewModel cadastrarVm = new CadastrarMedicamentoViewModel(
-            string.Empty,
-            string.Empty,
-            0,
-            new List<OpcaoFornecedorViewModel>()
-        );
+        CadastrarMedicamentoViewModel cadastrarVm = CriarCadastrarVm();
 
         return View(cadastrarVm);
     }
@@ -35,7 +72,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
     public ActionResult Cadastrar(CadastrarMedicamentoViewModel cadastrarVm)
     {
         if (!ModelState.IsValid)
-            return View(cadastrarVm);
+            return View(cadastrarVm with { Fornecedores = ObterFornecedoresDisponiveis(repositorioFornecedor) });
 
         CadastrarMedicamentoDto dto = mapeador.Map<CadastrarMedicamentoDto>(cadastrarVm);
 
@@ -45,7 +82,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
         {
             ModelState.AddModelError(resultado);
 
-            return View(cadastrarVm);
+            return View(cadastrarVm with { Fornecedores = ObterFornecedoresDisponiveis(repositorioFornecedor) });
         }
 
         return RedirectToAction(nameof(Listar));
@@ -63,8 +100,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
             return RedirectToAction(nameof(Listar));
         }
 
-        EditarMedicamentoViewModel editarVm =
-            mapeador.Map<EditarMedicamentoViewModel>(resultado.Value);
+        EditarMedicamentoViewModel editarVm = CriarEditarVm(resultado.Value);
 
         return View(editarVm);
     }
@@ -73,7 +109,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
     public ActionResult Editar(EditarMedicamentoViewModel editarVm)
     {
         if (!ModelState.IsValid)
-            return View(editarVm);
+            return View(editarVm with { Fornecedores = ObterFornecedoresDisponiveis(repositorioFornecedor) });
 
         EditarMedicamentoDto dto = mapeador.Map<EditarMedicamentoDto>(editarVm);
 
@@ -83,7 +119,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, IMappe
         {
             ModelState.AddModelError(resultado);
 
-            return View(editarVm);
+            return View(editarVm with { Fornecedores = ObterFornecedoresDisponiveis(repositorioFornecedor) });
         }
 
         return RedirectToAction(nameof(Listar));
