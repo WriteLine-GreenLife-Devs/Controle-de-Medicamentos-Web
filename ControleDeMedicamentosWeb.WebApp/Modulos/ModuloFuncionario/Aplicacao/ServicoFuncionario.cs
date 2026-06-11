@@ -20,6 +20,10 @@ public class ServicoFuncionario
     {
         return repositorioFuncionario.SelecionarTodos().Any(f => f.CPF == cpf);
     }
+    private bool VerificarCPFExistenteEditar(string cpf, Guid Id)
+    {
+        return repositorioFuncionario.SelecionarTodos().Any(f => f.CPF == cpf && f.Id != Id);
+    }
     private static Result ValidarEntidade(Funcionario funcionario)
     {
         List<string> erros = funcionario.Validar();
@@ -68,7 +72,7 @@ public class ServicoFuncionario
         if (funcionario == null)
             return Result.Fail("Funcionário não encontrado.");
 
-        if (VerificarCPFExistente(dto.cpf))
+        if (VerificarCPFExistenteEditar(dto.cpf, dto.Id))
             return Falha(nameof(dto.cpf), "Já existe um funcionário cadastrado com este CPF.");
 
         Funcionario funcionarioAtualizado = new Funcionario(
