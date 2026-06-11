@@ -65,6 +65,20 @@ public sealed class Paciente : EntidadeBase<Paciente>
         }
     }
 
+    public string FormatarCartaoSus(string cartaoSus)
+    {
+        if (string.IsNullOrWhiteSpace(cartaoSus))
+            return string.Empty;
+
+        string numeros = System.Text.RegularExpressions.Regex.Replace(cartaoSus, @"\D", "");
+
+        // Cartão Nacional de Saúde (CNS)
+        if (numeros.Length == 15)
+            return System.Text.RegularExpressions.Regex.Replace(numeros, @"(\d{3})(\d{4})(\d{4})(\d{4})", "$1 $2 $3 $4");
+
+        return "";
+    }
+
     public override List<string> Validar()
     {
         List<string> erros = new List<string>();
@@ -79,19 +93,19 @@ public sealed class Paciente : EntidadeBase<Paciente>
             erros.Add("O campo \"Telefone\" deve ser preenchido.");
 
         else if (VerificarTelefone(Telefone) == "")
-            erros.Add("O campo \"Telefone\" é inválido (formato validado: 10-11 dígitos).");
+            erros.Add("O campo \"Telefone\" é inválido.");
 
         if (string.IsNullOrWhiteSpace(CartaoSUS))
             erros.Add("O campo \"Cartão SUS\" deve ser preenchido.");
 
-        else if (CartaoSUS.Length != 15)
-            erros.Add("O campo \"CartaoSUS\" deve conter 15 caracteres.");
+        else if (FormatarCartaoSus(CartaoSUS) == "")
+            erros.Add("O campo \"CartaoSUS\" é inválido (deve conter 15 números).");
 
         if (string.IsNullOrWhiteSpace(CPF))
             erros.Add("O campo \"CPF\" deve ser preenchido.");
 
         else if (VerificarCPF(CPF) == "")
-            erros.Add("O campo \"CPF\" é inválido (formato validado: 11 dígitos).");
+            erros.Add("O campo \"CPF\" é inválido.");
 
         return erros;
     }
