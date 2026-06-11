@@ -1,6 +1,7 @@
+@using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Dominio
 @{
     Layout = "_Layout";
-    ViewBag.Titulo = "Listagem de Fornecedores";
+    ViewBag.Titulo = "Listagem de Listas de Compras";
 }
 
 @model List<ListarFornecedoresViewModel>;
@@ -17,7 +18,7 @@
 @if (Model.Count == 0)
 {
     <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
-        Nenhuma Fornecedor cadastrada.
+        Nenhuma lista de compras cadastrada.
     </div>
 }
 else
@@ -30,24 +31,38 @@ else
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                             <h5 class="card-title mb-0">@f.Nome</h5>
-                            <span class="badge text-bg-primary rounded-pill">@f.Id.ToString().Substring(0, 8)</span>
                         </div>
-@*
+
                         <dl class="row g-2 mb-4">
-                            <dt class="col-6 text-secondary fw-semibold">Cor</dt>
-                            <dd class="col-6 mb-0 text-break">
-                                <span class="d-inline-block rounded-circle border me-2 align-middle" style="width: 1rem; height: 1rem; background-color: @f.Cor;"></span>
-                                @f.Cor
-                            </dd>
+                            @*<dt class="col-6 text-secondary fw-semibold">Criada em</dt>
+                            <dd class="col-6 mb-0 text-break">@f.email</dd> *@
+
+                            <dt class="col-6 text-secondary fw-semibold">Telefone</dt>
+                            <dd class="col-6 mb-0 text-break">@f.Telefone</dd>
+
+                            <dt class="col-6 text-secondary fw-semibold">CNPJ</dt>
+                            <dd class="col-6 mb-0 text-break">@f.CNPJ</dd>
                         </dl>
-*@
-                        <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@f.Id">Editar</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@f.Id">Excluir</a>
-                        </div>
+
+
+                        <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar"
+                           asp-route-id="@f.Id">Editar</a>
+                        <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir"
+                           asp-route-id="@f.Id">Excluir</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 }
+
+@*
+                        <dl class="row g-2 mb-4">
+                            <dt class="col-6 text-secondary fw-semibold">Cor</dt>
+                            <dd class="col-6 mb-0 text-break">
+                                <span class="d-inline-block rounded-circle border me-2 align-middle" style="width: 1rem; height: 1rem;
+                                background-color: @f.Cor;"></span>
+                                @f.Cor
+                            </dd>
+                        </dl>
+*@
