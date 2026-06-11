@@ -20,10 +20,12 @@ public class ServicoEstoque
         if (dto.Quantidade <= 0)
             return Falha(nameof(dto.Quantidade), "Quantidade deve ser positiva.");
 
-        var entrada = new Estoque(dto.Data, 
-                                  new Medicamento { Id = dto.MedicamentoId }, 
-                                  new Funcionario { Id = dto.FuncionarioId }, 
-                                  dto.Quantidade);
+        Estoque entrada = new Estoque(
+            dto.Data, 
+            new Medicamento { Id = dto.MedicamentoId }, 
+            new Funcionario { Id = dto.FuncionarioId }, 
+            dto.Quantidade
+        );
 
         Result resultadoValidacao = ValidarEntidade(entrada);
 
@@ -40,18 +42,18 @@ public class ServicoEstoque
         if (dto.Medicamentos.Count == 0)
             return Falha(nameof(dto.Medicamentos), "É necessário informar ao menos um medicamento.");
 
-        var medicamentosSaida = dto.Medicamentos
+        List<MedicamentoSaida> medicamentosSaida = dto.Medicamentos
             .Select(m => new MedicamentoSaida(new Medicamento { Id = m.MedicamentoId }, m.Quantidade))
             .ToList();
 
-        var saida = new Estoque(dto.Data, new Paciente { Id = dto.PacienteId }, medicamentosSaida);
+        Estoque saida = new Estoque(dto.Data, new Paciente { Id = dto.PacienteId }, medicamentosSaida);
 
         Result resultadoValidacao = ValidarEntidade(saida);
 
         if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
-        foreach (var med in medicamentosSaida)
+        foreach (MedicamentoSaida med in medicamentosSaida)
         {
             if (med.Quantidade <= 0)
                 return Falha(nameof(med.Quantidade), "Quantidade deve ser positiva.");
