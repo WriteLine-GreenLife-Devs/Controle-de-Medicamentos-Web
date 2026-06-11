@@ -1,4 +1,4 @@
-@using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloFornecedor.Dominio
+@using ControleDeMedicamentosWeb.WebApp
 @{
     Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Listas de Compras";
@@ -38,12 +38,11 @@ else
                             <dd class="col-6 mb-0 text-break">@f.email</dd> *@
 
                             <dt class="col-6 text-secondary fw-semibold">Telefone</dt>
-                            <dd class="col-6 mb-0 text-break">@f.Telefone</dd>
+                            <dd class="col-6 mb-0 text-break">@Servico.FormatarTelefone(f.Telefone)</dd>
 
                             <dt class="col-6 text-secondary fw-semibold">CNPJ</dt>
-                            <dd class="col-6 mb-0 text-break">@f.CNPJ</dd>
+                            <dd class="col-6 mb-0 text-break">@Servico.FormatarCNPJ(f.CNPJ)</dd>
                         </dl>
-
 
                         <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar"
                            asp-route-id="@f.Id">Editar</a>
