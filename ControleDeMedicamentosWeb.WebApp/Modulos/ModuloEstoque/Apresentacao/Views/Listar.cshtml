@@ -1,0 +1,79 @@
+@using ControleDeMedicamentosWeb.WebApp.Modulos.ModuloEstoque.Apresentacao
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Controle de Estoque";
+}
+
+@model ListarEstoqueViewModel;
+
+<div class="d-flex justify-content-end gap-2 mb-3">
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="CadastrarEntrada">Registrar Entrada</a>
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="CadastrarSaida">Registrar Saída</a>
+</div>
+
+@if (TempData["MensagemErro"] is string mensagemErro)
+{
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+        @mensagemErro
+    </div>
+}
+
+<h4 class="text-primary mt-4">Entradas</h4>
+@if (Model.Entradas.Count == 0)
+{
+    <div class="alert alert-primary">Nenhuma entrada registrada.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Medicamento</th>
+                <th>Funcionário</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ListarEntradaViewModel e in Model.Entradas)
+            {
+                <tr>
+                    <td>@e.Data.ToShortDateString()</td>
+                    <td>@e.Medicamento</td>
+                    <td>@e.Funcionario</td>
+                    <td>@e.Quantidade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4 class="text-primary mt-4">Saídas</h4>
+@if (Model.Saidas.Count == 0)
+{
+    <div class="alert alert-primary">Nenhuma saída registrada.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Paciente</th>
+                <th>Medicamentos</th>
+                <th>Quantidade Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ListarSaidaViewModel s in Model.Saidas)
+            {
+                <tr>
+                    <td>@s.Data.ToShortDateString()</td>
+                    <td>@s.Paciente</td>
+                    <td>@string.Join(", ", s.Medicamentos)</td>
+                    <td>@s.QuantidadeTotal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -54,7 +54,7 @@ public sealed class Estoque : EntidadeBase<Estoque>
     {
         List<string> erros = new List<string>();
 
-        //mensagens das validações
+        //mensagens das validações... serão necessárias?
 
         return erros;
     }

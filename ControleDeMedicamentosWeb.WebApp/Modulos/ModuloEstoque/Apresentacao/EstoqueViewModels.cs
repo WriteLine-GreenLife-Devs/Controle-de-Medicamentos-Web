@@ -29,6 +29,7 @@ public record ListarEntradaViewModel(
     string Funcionario,
     int Quantidade
 );
+
 public record ListarSaidaViewModel(
     Guid Id,
     DateTime Data,
@@ -40,4 +41,26 @@ public record ListarSaidaViewModel(
 public record ListarEstoqueViewModel(
     List<ListarEntradaViewModel> Entradas,
     List<ListarSaidaViewModel> Saidas
+);
+
+public record EditarEstoqueViewModel(
+    Guid Id,
+    [Required] DateTime Data,
+    [Required] string TipoOperacao,
+    Guid? MedicamentoId,
+    Guid? FuncionarioId,
+    Guid? PacienteId,
+    int Quantidade,
+    List<MedicamentoSaidaViewModel>? Medicamentos
+);
+
+public record ExcluirEstoqueViewModel(
+    Guid Id,
+    DateTime Data,
+    string TipoOperacao,
+    string? Medicamento,
+    string? Funcionario,
+    string? Paciente,
+    int Quantidade,
+    List<string>? Medicamentos
 );
