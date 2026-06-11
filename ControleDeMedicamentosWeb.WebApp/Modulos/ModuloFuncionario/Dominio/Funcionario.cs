@@ -76,13 +76,13 @@ public sealed class Funcionario : EntidadeBase<Funcionario>
             erros.Add("O campo \"Telefone\" deve ser preenchido.");
 
         else if (VerificarTelefone(Telefone) == "")
-            erros.Add("O campo \"Telefone\" é inválido (formato validado: 10-11 dígitos).");
+            erros.Add("O campo \"Telefone\" é inválido.");
 
         if (string.IsNullOrWhiteSpace(CPF))
             erros.Add("O campo \"CPF\" deve ser preenchido.");
 
         else if (VerificarCPF(CPF) == "")
-            erros.Add("O campo \"CPF\" é inválido (formato validado: 11 dígitos).");
+            erros.Add("O campo \"CPF\" é inválido.");
 
         return erros;
     }

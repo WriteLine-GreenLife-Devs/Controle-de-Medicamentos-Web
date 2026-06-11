@@ -91,6 +91,6 @@ class Servico
         if (numeros.Length == 15)
             return Regex.Replace(numeros, @"(\d{3})(\d{4})(\d{4})(\d{4})", "$1 $2 $3 $4");
 
-        return cartaoSus;
+        return "";
     }
 }
