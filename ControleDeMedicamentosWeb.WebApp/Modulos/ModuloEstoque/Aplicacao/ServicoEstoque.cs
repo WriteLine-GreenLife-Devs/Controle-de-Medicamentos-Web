@@ -88,7 +88,7 @@ public class ServicoEstoque
 
     public Result CadastrarSaida(CadastrarSaidaDto dto)
     {
-        if (dto.Medicamentos.Count == 0)
+        if (dto.Medicamentos == null || dto.Medicamentos.Count == 0)
             return Falha(nameof(dto.Medicamentos), "É necessário informar ao menos um medicamento.");
 
         Paciente? paciente = repositorioPaciente.SelecionarPorId(dto.PacienteId);
@@ -119,7 +119,7 @@ public class ServicoEstoque
             int estoqueDisponivel = entradas - saidas;
 
             if (m.Quantidade > estoqueDisponivel)
-                return Falha(nameof(m.Quantidade), "Estoque insuficiente para o medicamento selecionado.");
+                return Falha(nameof(m.Quantidade), $"Estoque insuficiente para o medicamento {medicamento.Nome}.");
 
             medicamentosSaida.Add(new MedicamentoSaida(medicamento, m.Quantidade));
         }

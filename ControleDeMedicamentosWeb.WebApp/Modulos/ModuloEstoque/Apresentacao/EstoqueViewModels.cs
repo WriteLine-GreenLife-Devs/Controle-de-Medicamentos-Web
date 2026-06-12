@@ -9,26 +9,24 @@ public record OpcaoPacienteViewModel(Guid Id, string Nome);
 
 public record CadastrarEntradaViewModel(
     [Required] DateTime Data,
-    [Required] Guid MedicamentoId,
-    [Required] Guid FuncionarioId,
-    [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser positiva.")]
-    int Quantidade,
+    [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")] Guid MedicamentoId,
+    [Required(ErrorMessage = "O campo \"Funcionário\" deve ser preenchido.")] Guid FuncionarioId,
+    [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser positiva.")] int Quantidade,
     [ValidateNever] List<OpcaoMedicamentoViewModel> MedicamentosDisponiveis,
     [ValidateNever] List<OpcaoFuncionarioViewModel> Funcionarios
 );
 
 public record CadastrarSaidaViewModel(
     [Required] DateTime Data,
-    [Required] Guid PacienteId,
-    [Required] List<MedicamentoSaidaViewModel> Medicamentos,
+    [Required(ErrorMessage = "O campo \"Paciente\" deve ser preenchido.")] Guid PacienteId,
+    [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")] List<MedicamentoSaidaViewModel> Medicamentos,
     [ValidateNever] List<OpcaoPacienteViewModel> Pacientes,
     [ValidateNever] List<OpcaoMedicamentoViewModel> MedicamentosDisponiveis
 );
 
 public record MedicamentoSaidaViewModel(
     Guid MedicamentoId,
-    [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser positiva.")]
-    int Quantidade
+    [Range(1, int.MaxValue, ErrorMessage = "Quantidade deve ser positiva.")] int Quantidade
 );
 
 public record ListarEntradaViewModel(

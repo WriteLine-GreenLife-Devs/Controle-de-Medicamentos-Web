@@ -19,9 +19,12 @@
         <label asp-for="MedicamentoId" class="form-label fw-semibold text-primary text-uppercase small">Medicamento</label>
         <select asp-for="MedicamentoId" class="form-select">
             <option value="">Selecione um medicamento</option>
-            @foreach (OpcaoMedicamentoViewModel medicamento in Model.MedicamentosDisponiveis)
+            @if (Model.MedicamentosDisponiveis != null)
             {
-                <option value="@medicamento.Id">@medicamento.Nome</option>
+                foreach (OpcaoMedicamentoViewModel medicamento in Model.MedicamentosDisponiveis)
+                {
+                    <option value="@medicamento.Id">@medicamento.Nome</option>
+                }
             }
         </select>
         <span asp-validation-for="MedicamentoId" class="text-danger small fw-semibold"></span>
@@ -31,9 +34,12 @@
         <label asp-for="FuncionarioId" class="form-label fw-semibold text-primary text-uppercase small">Funcionário</label>
         <select asp-for="FuncionarioId" class="form-select">
             <option value="">Selecione um funcionário</option>
-            @foreach (OpcaoFuncionarioViewModel funcionario in Model.Funcionarios)
+            @if (Model.Funcionarios != null)
             {
-                <option value="@funcionario.Id">@funcionario.Nome</option>
+                foreach (OpcaoFuncionarioViewModel funcionario in Model.Funcionarios)
+                {
+                    <option value="@funcionario.Id">@funcionario.Nome</option>
+                }
             }
         </select>
         <span asp-validation-for="FuncionarioId" class="text-danger small fw-semibold"></span>
